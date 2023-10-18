@@ -5,14 +5,6 @@
 echo "Loading modules updates..............."
 git submodule update --init --recursive
 
-echo "Environment vars............"
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-export PATH=$PATH:$JAVA_HOME
-export ANDROID_NDK_HOME=/home/khidrew/Android/Sdk/ndk/20.0.5594570/
-export PATH=$PATH:$ANDROID_NDK_HOME
-export ANDROID_SDK_ROOT=/home/khidrew/Android/Sdk
-export PATH=$PATH:$ANDROID_SDK_ROOT
-
 
 # Check if the 'build' directory exists, and if not, create it
 if [ ! -d "build" ]; then

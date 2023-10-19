@@ -92,6 +92,9 @@ publishing {
         }
     }
 }
+artifactoryPublish {
+       publications(publishing.publications.release)
+   }
 
 artifactory {
     contextUrl = 'http://localhost:8082/artifactory/'

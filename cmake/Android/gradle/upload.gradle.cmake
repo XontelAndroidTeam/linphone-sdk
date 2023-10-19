@@ -1,6 +1,3 @@
-// Project information
-buildDir = 'linphone-sdk/bin'
-
 buildscript {
     repositories {
         google()
@@ -12,17 +9,25 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.2'
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.28.2"
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
+apply plugin: 'com.jfrog.artifactory'
+
+artifactory {
+    contextUrl = 'http://192.168.1.68:8082/'
+    publish {
+        repository {
+            repoKey = 'libs-snapshot-local'
+            username = 'jenkins'
+            password = 'Xontel@123'
+        }
+        defaults {
+            publications('debug', 'release')
+        }
     }
 }
-
-apply plugin: 'maven-publish'
 
 def artefactGroupId = 'org.linphone'
 if (project.hasProperty("legacy-wrapper")) {
@@ -42,8 +47,9 @@ println("AAR artefact group is: " + artefactGroupId + ", SDK version @LINPHONESD
 publishing {
     publications {
         debug(MavenPublication) {
+            from components.java
             groupId artefactGroupId
-            artifactId 'linphone-sdk-android' + '-debug'
+            artifactId 'linphone-sdk-android-debug'
             version "@LINPHONESDK_VERSION@"
             artifact("$buildDir/outputs/aar/linphone-sdk-android-debug.aar")
             artifact source: "$buildDir/libs/linphone-sdk-android-sources.jar", classifier: 'sources', extension: 'jar'
@@ -67,6 +73,7 @@ publishing {
         }
 
         release(MavenPublication) {
+            from components.java
             groupId artefactGroupId
             artifactId 'linphone-sdk-android'
             version "@LINPHONESDK_VERSION@"
@@ -91,10 +98,5 @@ publishing {
             }
         }
     }
-    
-    repositories {
-        maven {
-            url "./maven_repository/"
-        }
-    }
 }
+

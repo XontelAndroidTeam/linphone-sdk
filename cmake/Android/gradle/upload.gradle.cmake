@@ -37,6 +37,7 @@ artifactory {
             publications('debug', 'release')
         }
     }
+    }
 
 
 def artefactGroupId = 'org.linphone'

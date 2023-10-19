@@ -12,7 +12,7 @@ buildscript {
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.28.2"
     }
 }
-
+apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.artifactory'
 
 artifactory {

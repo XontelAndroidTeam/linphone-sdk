@@ -25,19 +25,7 @@ allprojects {
 
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.artifactory'
-artifactory {
-    contextUrl = 'http://localhost:8082/artifactory/'
-    publish {
-        repository {
-            repoKey = 'libs-snapshot-local'
-            username = 'jenkins'
-            password = 'Xontel@123'
-        }
-        defaults {
-            publications('debug', 'release')
-        }
-    }
-    }
+
 
 
 def artefactGroupId = 'org.linphone'
@@ -104,3 +92,19 @@ publishing {
         }
     }
 }
+
+artifactory {
+    contextUrl = 'http://localhost:8082/artifactory/'
+    publish {
+        repository {
+            repoKey = 'libs-snapshot-local'
+            username = 'jenkins'
+            password = 'Xontel@123'
+        }
+        defaults {
+            publications('debug', 'release')
+            publishArtifacts = true 
+            publishPom = true 
+        }
+    }
+    }

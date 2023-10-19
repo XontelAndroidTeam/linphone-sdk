@@ -1,3 +1,5 @@
+// Project information
+buildDir = 'linphone-sdk/bin'
 buildscript {
     repositories {
         google()
@@ -7,16 +9,24 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.2'
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.28.2"
     }
 }
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.artifactory'
-
 artifactory {
-    contextUrl = 'http://192.168.1.68:8082/'
+    contextUrl = 'http://localhost:8082/artifactory/'
     publish {
         repository {
             repoKey = 'libs-snapshot-local'
@@ -27,7 +37,7 @@ artifactory {
             publications('debug', 'release')
         }
     }
-}
+
 
 def artefactGroupId = 'org.linphone'
 if (project.hasProperty("legacy-wrapper")) {
@@ -43,18 +53,15 @@ if (project.hasProperty("minimal-size")) {
     artefactGroupId = artefactGroupId + '.minimal'
 }
 println("AAR artefact group is: " + artefactGroupId + ", SDK version @LINPHONESDK_VERSION@")
-
 publishing {
     publications {
         debug(MavenPublication) {
-            from components.java
             groupId artefactGroupId
-            artifactId 'linphone-sdk-android-debug'
+            artifactId 'linphone-sdk-android' + '-debug'
             version "@LINPHONESDK_VERSION@"
             artifact("$buildDir/outputs/aar/linphone-sdk-android-debug.aar")
             artifact source: "$buildDir/libs/linphone-sdk-android-sources.jar", classifier: 'sources', extension: 'jar'
             artifact source: "$buildDir/libs/linphone-sdk-android-javadoc.jar", classifier: 'javadoc', extension: 'jar'
-
             pom {
                 name = 'Linphone'
                 description = 'Instant messaging and voice/video over IP (VoIP) library'
@@ -71,16 +78,13 @@ publishing {
                 }
             }
         }
-
         release(MavenPublication) {
-            from components.java
             groupId artefactGroupId
             artifactId 'linphone-sdk-android'
             version "@LINPHONESDK_VERSION@"
             artifact("$buildDir/outputs/aar/linphone-sdk-android-release.aar")
             artifact source: "$buildDir/libs/linphone-sdk-android-sources.jar", classifier: 'sources', extension: 'jar'
             artifact source: "$buildDir/libs/linphone-sdk-android-javadoc.jar", classifier: 'javadoc', extension: 'jar'
-
             pom {
                 name = 'Linphone'
                 description = 'Instant messaging and voice/video over IP (VoIP) library'
@@ -99,4 +103,3 @@ publishing {
         }
     }
 }
-

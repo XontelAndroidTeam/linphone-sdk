@@ -100,7 +100,7 @@ artifactory {
     contextUrl = 'http://localhost:8082/artifactory/'
     publish {
         repository {
-            repoKey = 'libs-snapshot-local'
+            repoKey = 'libs-release-local'
             username = 'jenkins'
             password = 'Xontel@123'
         }

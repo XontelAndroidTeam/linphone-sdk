@@ -105,7 +105,7 @@ artifactory {
             password = 'Xontel@123'
         }
         defaults {
-            publications('release', 'debug')
+            publications('release')
             
         }
     }

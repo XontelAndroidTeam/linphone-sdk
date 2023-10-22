@@ -106,8 +106,7 @@ artifactory {
         }
         defaults {
             publications('debug', 'release')
-            publishArtifacts = true 
-            publishPom = true 
+            
         }
     }
     }

@@ -50,7 +50,7 @@ if(_gradle_assemble_result)
 endif()
 
 execute_process(
-	COMMAND "${LINPHONESDK_DIR}/cmake/Android/gradlew" "--stacktrace" "-b" "upload.gradle" "publish"
+	COMMAND "${LINPHONESDK_DIR}/cmake/Android/gradlew" "--stacktrace" "-b" "upload.gradle" "artifactoryPublish"
 	WORKING_DIRECTORY "${LINPHONESDK_BUILD_DIR}"
 )
 execute_process(
